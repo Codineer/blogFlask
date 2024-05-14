@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav class="px-4 py-3 bg-[#1e1e1e]">
+        <ul class="p-0 mb-0 list-none flex gap-4 ">
+            <a href="/" class="no-underline">
+                <li class="hover:text-gray-300 cursor-pointer text-gray-400">
+                    Home
+                </li>
+            </a>
+            {% if user.is_authenticated %}
+            <a href="/create-post" class="no-underline">
+
+                <li class="hover:text-gray-300 cursor-pointer text-gray-400">
+                    Create Post
+                </li>
+            </a>
+            <a href="/logout" class="no-underline">
+
+                <li class="hover:text-gray-300 cursor-pointer text-gray-400">
+                    logout
+                </li>
+            </a>
+            {% else %}
+            <a href="/login" class="no-underline">
+                <li class="hover:text-gray-300 cursor-pointer text-gray-400">
+                    Login
+                </li>
+            </a>
+            <a href="/sign-up" class="no-underline">
+
+                <li class="hover:text-gray-300 cursor-pointer text-gray-400">
+                    Sign Up
+                </li>
+            </a>
+            {% endif %}
+        </ul>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    {% for category,msg in messages %}
+    <p>
+        {{msg}}
+    </p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div id="toast"
+        class="fixed inset-x-0 bottom-0 z-50   border font-bold pl-2 bg-red-500 text-white rounded-t shadow-md">
+    </div>
+    <div>{% block content %}{% endblock %}</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/create_post.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/project.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/delete_post.js') }}"></script>
+    <script async defer src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
+
+
+
+</body>
+
+</html>
